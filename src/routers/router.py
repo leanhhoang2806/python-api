@@ -5,6 +5,7 @@ from src.models.Payloads import ItemModel
 from src.managers.item_manager import ItemManager
 from src.managers.database_manager import get_db_session
 from src.authenticate.jwt_authenticate import authenticate_jwt
+from src.error_handlers.error_handler import error_handler
 
 router = APIRouter()
 
@@ -14,6 +15,7 @@ def read_health():
     return JSONResponse({}, status_code=200)
 
 
+@error_handler
 @router.post("/item")
 def post_item(
     item: ItemModel,

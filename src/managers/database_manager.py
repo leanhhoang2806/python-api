@@ -8,6 +8,8 @@ Base = declarative_base(metadata=metadata)
 
 
 class DatabaseManager:
+    _instance = None  # Class variable to store the instance
+
     def __init__(self, database_url: str):
         self.engine = create_engine(database_url)
         self.metadata = MetaData()
@@ -17,12 +19,15 @@ class DatabaseManager:
             bind=self.engine)
         Base.metadata.create_all(bind=self.engine)
 
-
-database_manager = DatabaseManager(CONFIG.DATABASE_URL)
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls(CONFIG.DATABASE_URL)
+        return cls._instance
 
 
 def get_db_session():
-    db = database_manager.SessionLocal()
+    db = DatabaseManager.get_instance().SessionLocal()
     try:
         yield db
     finally:

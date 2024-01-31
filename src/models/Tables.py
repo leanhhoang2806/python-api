@@ -2,7 +2,7 @@ from sqlalchemy import \
     Column, String, Table, \
     TIMESTAMP, text, MetaData
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)

@@ -15,6 +15,7 @@ COPY . /app/
 
 # Run linting check
 RUN flake8 . --exclude=myenv
+RUN pytest
 
 
 # Expose port 8000 to the outside world
